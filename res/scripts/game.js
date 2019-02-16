@@ -9,6 +9,11 @@ class Game {
 		this.running = true;
 
 		this.squares = [];
+
+		this.cookie = new Cookie(new Date(Date.now() + 365 * 24 * 60 * 60 * 1000));
+
+
+		this.showHighscore();
 		this.start();
 	}
 
@@ -123,5 +128,17 @@ class Game {
 			}
 		}
 		this.ctx.fillText("SCORE: " + score, this.cvs.width/2, this.cvs.height/2 + 50);
+		var high_score = this.cookie.get("high_score");
+		if (!high_score || parseInt(high_score) < score) {
+			console.log("hi");
+			this.cookie.set("high_score", score);
+		}
+		this.showHighscore();
+	}
+
+	showHighscore() {
+		var e = document.getElementById("highscore");
+		var highscore = this.cookie.get("high_score");
+		e.textContent = "Highscore: " + (highscore ? highscore : 0);
 	}
 }
