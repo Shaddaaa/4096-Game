@@ -69,55 +69,41 @@ class Game {
 	move(xDir, yDir) {
 		if(!this.running)
 			return;
-		if(xDir == -1 || yDir == -1) {
-			for(var y = -yDir; y < this.size; y++) {
-				for(var x = -xDir; x < this.size; x++) {
-					var xv = x;
-					var yv = y;
-					var xv2 = x+xDir;
-					var yv2 = y+yDir;
-					if(this.squares[x][y] != 0) {
-						for(var i = 0; xv2 >= 0 && yv2 >= 0 && (this.squares[xv][yv] == this.squares[xv2][yv2] || this.squares[xv2][yv2] == 0);) {
-							console.log(xv + ", " + yv + ", " + xv2 + ", " + yv2);
-							if(this.squares[xv][yv] == this.squares[xv2][yv2]) {
-								this.squares[xv2][yv2] = this.squares[xv][yv]*2;
-								this.squares[xv][yv] = 0;
-							} else if(this.squares[xv2][yv2] == 0) {
-								this.squares[xv2][yv2] = this.squares[xv][yv];
-								this.squares[xv][yv] = 0;
-							}
-							i++;
-							xv = x + i*xDir;
-							yv = y + i*yDir;
-							xv2 = x + (i+1)*xDir;
-							yv2 = y + (i+1)*yDir;
-						}
-						console.log(xv + ", " + yv + ", " + xv2 + ", " + yv2);
-					}
-				}
+
+		var y = 0;
+		if(yDir == -1 || xDir == -1)
+			y = -yDir;
+		if(yDir == 1 || xDir == 1)
+			y = this.size-1-yDir;
+
+		for(; y < this.size && y >= 0; y += -xDir-yDir) {
+
+			var x = 0;
+			if(xDir == -1 || yDir == -1) {
+				x = -xDir;
 			}
-		} else {
-			for(var y = this.size-1-yDir; y >= 0; y--) {
-				for(var x = this.size-1-xDir; x >= 0; x--) {
-					var xv = x;
-					var yv = y;
-					var xv2 = x+xDir;
-					var yv2 = y+yDir;
-					if(this.squares[x][y] != 0) {
-						for(var i = 0; xv2 < this.size && yv2 < this.size && (this.squares[xv][yv] == this.squares[xv2][yv2] || this.squares[xv2][yv2] == 0);) {
-							if(this.squares[xv][yv] == this.squares[xv2][yv2]) {
-								this.squares[xv2][yv2] = this.squares[xv][yv]*2;
-								this.squares[xv][yv] = 0;
-							} else if(this.squares[xv2][yv2] == 0) {
-								this.squares[xv2][yv2] = this.squares[xv][yv];
-								this.squares[xv][yv] = 0;
-							}
-							i++;
-							xv = x + i*xDir;
-							yv = y + i*yDir;
-							xv2 = x + (i+1)*xDir;
-							yv2 = y + (i+1)*yDir;
+			if(xDir == 1 || yDir == 1)
+				x = this.size-1-xDir;
+			
+			for(; x < this.size && x >= 0; x += -xDir-yDir) {
+				var xv = x;
+				var yv = y;
+				var xv2 = x+xDir;
+				var yv2 = y+yDir;
+				if(this.squares[x][y] != 0) {
+					for(var i = 0; xv2 >= 0 && xv2 < this.size && yv2 >= 0 < this.size && (this.squares[xv][yv] == this.squares[xv2][yv2] || this.squares[xv2][yv2] == 0);) {
+						if(this.squares[xv][yv] == this.squares[xv2][yv2]) {
+							this.squares[xv2][yv2] = this.squares[xv][yv]*2;
+							this.squares[xv][yv] = 0;
+						} else if(this.squares[xv2][yv2] == 0) {
+							this.squares[xv2][yv2] = this.squares[xv][yv];
+							this.squares[xv][yv] = 0;
 						}
+						i++;
+						xv = x + i*xDir;
+						yv = y + i*yDir;
+						xv2 = x + (i+1)*xDir;
+						yv2 = y + (i+1)*yDir;
 					}
 				}
 			}
